@@ -39,7 +39,7 @@ const reportSchema = new mongoose.Schema({
     concerns: [{ type: String }],
     nextSteps: [{ type: String }],
     specialistType: { type: String },
-    urgencyLevel: { type: String, enum: ['Normal', 'Monitor', 'Consult Doctor', 'Urgent Review'] },
+    urgencyLevel: { type: String },
     disclaimer: { type: String }
   },
   aiModel: { type: String, default: 'gemini-2.5-flash' },
