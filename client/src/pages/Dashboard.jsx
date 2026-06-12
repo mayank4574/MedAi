@@ -108,7 +108,7 @@ export default function Dashboard() {
       </div>
 
       {/* Top 3 Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         {/* System Health */}
         <div className="bg-white rounded-xl border border-slate-200 p-6 flex flex-col items-center shadow-sm">
           <div className="w-full flex justify-between items-center mb-6">
@@ -213,7 +213,7 @@ export default function Dashboard() {
               <Users size={16} /> Manage Group
             </Link>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             {familyList.slice(0, 3).map((member, idx) => {
               const info = getFamilyStatus(member.name);
               return (

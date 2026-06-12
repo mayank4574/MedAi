@@ -167,7 +167,7 @@ export default function UploadScan() {
                 Support for medical imaging, blood results, and diagnostic summaries.
               </p>
 
-              <div className="flex gap-4 w-full justify-center" onClick={e => e.stopPropagation()}>
+              <div className="flex flex-col sm:flex-row gap-4 w-full justify-center" onClick={e => e.stopPropagation()}>
                 <button 
                   onClick={() => {
                     const input = document.createElement('input');
@@ -179,13 +179,13 @@ export default function UploadScan() {
                     };
                     input.click();
                   }}
-                  className="flex items-center gap-2 bg-primary hover:bg-primary-hover text-white px-6 py-3 rounded-lg text-sm font-medium transition-all cursor-pointer hover:shadow-lg"
+                  className="flex w-full sm:w-auto items-center justify-center gap-2 bg-primary hover:bg-primary-hover text-white px-6 py-3 rounded-lg text-sm font-medium transition-all cursor-pointer hover:shadow-lg"
                 >
                   <Camera size={18} /> Upload Camera
                 </button>
                 <button 
                   onClick={() => document.querySelector('input[type="file"]').click()}
-                  className="flex items-center gap-2 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 px-6 py-3 rounded-lg text-sm font-medium transition-all cursor-pointer hover:shadow-md"
+                  className="flex w-full sm:w-auto items-center justify-center gap-2 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 px-6 py-3 rounded-lg text-sm font-medium transition-all cursor-pointer hover:shadow-md"
                 >
                   <FolderOpen size={18} /> Browse Files
                 </button>

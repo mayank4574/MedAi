@@ -227,7 +227,7 @@ export default function Layout() {
       )}
 
       {/* Sidebar */}
-      <aside className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-slate-50 border-r border-slate-200 flex flex-col justify-between transform transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
+      <aside className={`fixed lg:static inset-y-0 left-0 z-50 w-[280px] lg:w-64 bg-slate-50 border-r border-slate-200 flex flex-col justify-between transform transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
         <div>
           <div className="p-4 lg:p-6 flex justify-between items-center">
             <Link to="/dashboard" className="flex items-center gap-2 group cursor-pointer" onClick={() => setIsMobileMenuOpen(false)}>
@@ -317,7 +317,7 @@ export default function Layout() {
           </div>
           <div className="flex items-center gap-2 sm:gap-3">
             {/* ===== SEARCH BAR ===== */}
-            <div className="relative" ref={searchRef}>
+            <div className="relative flex-1 min-w-[100px] sm:min-w-[200px]" ref={searchRef}>
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={16} />
               <input 
                 type="text" 
@@ -325,7 +325,7 @@ export default function Layout() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={() => { if (searchQuery.length >= 2) setShowSearch(true); }}
-                className="pl-9 pr-4 py-1.5 bg-slate-100 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:bg-white transition-all w-[140px] sm:w-[200px] lg:w-[260px]"
+                className="pl-9 pr-4 py-1.5 bg-slate-100 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:bg-white transition-all w-full md:w-64"
               />
               {searchQuery && (
                 <button 
