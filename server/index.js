@@ -1,16 +1,15 @@
 require('dotenv').config();
 
-// Fail fast if Cloudinary credentials are missing
+// Warn if Cloudinary credentials are missing, but don't crash the server so other APIs (like Gemini) can still work
 if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) {
-  console.error('\n======================================================');
-  console.error('[CRITICAL] Cloudinary is not configured properly.');
-  console.error('Missing one or more required environment variables:');
-  console.error('- CLOUDINARY_CLOUD_NAME');
-  console.error('- CLOUDINARY_API_KEY');
-  console.error('- CLOUDINARY_API_SECRET');
-  console.error('Server cannot start. Please configure Cloudinary in .env');
-  console.error('======================================================\n');
-  process.exit(1);
+  console.warn('\n======================================================');
+  console.warn('[WARNING] Cloudinary is not configured properly.');
+  console.warn('Missing one or more required environment variables:');
+  console.warn('- CLOUDINARY_CLOUD_NAME');
+  console.warn('- CLOUDINARY_API_KEY');
+  console.warn('- CLOUDINARY_API_SECRET');
+  console.warn('Profile picture uploads will fail. Other features will work normally.');
+  console.warn('======================================================\n');
 }
 const express = require('express');
 const cors = require('cors');
