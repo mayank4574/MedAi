@@ -115,7 +115,7 @@ export default function Dashboard() {
             <h3 className="text-lg font-semibold text-slate-900">Overall Health Score</h3>
             <Info size={18} className="text-blue-500 cursor-pointer" />
           </div>
-          <div className="relative w-40 h-40 mb-4">
+          <div className="relative w-32 h-32 sm:w-40 sm:h-40 mb-4 shrink-0">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
@@ -136,8 +136,8 @@ export default function Dashboard() {
               </PieChart>
             </ResponsiveContainer>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-3xl font-bold text-slate-900">{healthScore}%</span>
-              <span className="text-[10px] font-medium text-blue-600 uppercase tracking-wider text-center px-2">
+              <span className="text-2xl sm:text-3xl font-bold text-slate-900">{healthScore}%</span>
+              <span className="text-[10px] font-medium text-blue-600 uppercase tracking-wider text-center px-1 sm:px-2">
                 {healthScore > 80 ? 'Optimal' : (healthScore > 50 ? 'Needs Attention' : 'Critical')}
               </span>
             </div>
@@ -241,17 +241,17 @@ export default function Dashboard() {
 
         <div>
           <h2 className="text-xl font-bold text-slate-900 mb-4">Glucose Trends</h2>
-          <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm h-[204px] flex flex-col justify-between">
+          <div className="bg-white border border-slate-200 rounded-xl p-4 sm:p-6 shadow-sm min-h-[204px] h-auto flex flex-col justify-between">
             <div className="flex justify-between items-start">
               <div>
                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">LATEST VALUE</p>
                 <p className="text-2xl font-bold text-slate-900">{latestGlucose} <span className="text-sm font-medium text-slate-500">mg/dL</span></p>
               </div>
-              <span className={`px-2 py-0.5 rounded text-xs font-bold flex items-center gap-1 ${latestGlucose > 100 ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'}`}>
+              <span className={`px-2 py-0.5 rounded text-xs font-bold flex items-center gap-1 shrink-0 ${latestGlucose > 100 ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'}`}>
                 {latestGlucose > 100 ? <><TrendingUp size={12} /> High</> : <><TrendingDown size={12} /> Normal</>}
               </span>
             </div>
-            <div className="h-24 w-full mt-4">
+            <div className="h-32 sm:h-24 min-h-[96px] w-full mt-4">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={barData}>
                   <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{ fontSize: 8, fill: '#94a3b8' }} dy={10} />

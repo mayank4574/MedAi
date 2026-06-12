@@ -225,8 +225,8 @@ export default function UploadScan() {
           )}
 
           {/* Translation Language Selector */}
-          <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
-            <div className="flex items-center justify-between">
+          <div className="bg-white rounded-xl border border-slate-200 p-4 sm:p-6 shadow-sm">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center">
                   <Globe size={20} className="text-primary" />
@@ -239,7 +239,7 @@ export default function UploadScan() {
               <select 
                 value={language}
                 onChange={(e) => setLanguage(e.target.value)}
-                className="bg-slate-50 border border-slate-200 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-56 p-2.5 outline-none cursor-pointer"
+                className="bg-slate-50 border border-slate-200 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full sm:w-56 p-2.5 outline-none cursor-pointer"
               >
                 {LANGUAGES.map(lang => (
                   <option key={lang.code} value={lang.code}>
@@ -251,8 +251,8 @@ export default function UploadScan() {
           </div>
 
           {/* Family Member Selector */}
-          <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
-            <div className="flex items-center justify-between">
+          <div className="bg-white rounded-xl border border-slate-200 p-4 sm:p-6 shadow-sm">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
                 <h4 className="text-sm font-bold text-slate-900">Report For</h4>
                 <p className="text-xs text-slate-500 mt-1">Assign this report to yourself or a family member.</p>
@@ -262,7 +262,7 @@ export default function UploadScan() {
                 value={familyMember}
                 onChange={(e) => setFamilyMember(e.target.value)}
                 placeholder="Self"
-                className="bg-slate-50 border border-slate-200 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-48 p-2.5 outline-none"
+                className="bg-slate-50 border border-slate-200 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full sm:w-48 p-2.5 outline-none"
               />
             </div>
           </div>
@@ -284,7 +284,7 @@ export default function UploadScan() {
               <button 
                 onClick={handleProcess}
                 disabled={isProcessing}
-                className={`bg-primary text-white px-8 py-3 rounded-lg text-sm font-bold shadow-md hover:bg-primary-hover disabled:opacity-50 transition-all cursor-pointer hover:shadow-lg active:scale-[0.98] ${isProcessing ? 'animate-pulse-glow' : ''}`}
+                className={`w-full sm:w-auto bg-primary text-white px-8 py-3 rounded-lg text-sm font-bold shadow-md hover:bg-primary-hover disabled:opacity-50 transition-all cursor-pointer hover:shadow-lg active:scale-[0.98] ${isProcessing ? 'animate-pulse-glow' : ''}`}
               >
                 {isProcessing ? '⏳ Processing...' : '🔬 Start Analysis'}
               </button>

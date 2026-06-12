@@ -197,7 +197,7 @@ export default function Family() {
               <button 
                 type="submit" 
                 disabled={saving}
-                className="bg-primary hover:bg-primary-hover text-white px-8 py-3 rounded-xl text-sm font-bold transition-all shadow-md cursor-pointer disabled:opacity-50 flex items-center gap-2"
+                className="bg-primary hover:bg-primary-hover text-white px-8 py-3 rounded-xl text-sm font-bold transition-all shadow-md cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2 w-full md:w-auto"
               >
                 {saving ? <><Loader2 size={16} className="animate-spin" /> Saving...</> : 'Save Profile'}
               </button>

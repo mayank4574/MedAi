@@ -30,7 +30,8 @@ import {
   Clock,
   Trash2,
   ExternalLink,
-  Loader2
+  Loader2,
+  Menu
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useModal } from '../context/ModalContext';
@@ -51,6 +52,7 @@ export default function Layout() {
   const [allReports, setAllReports] = useState([]);
   const [notifications, setNotifications] = useState([]);
   const [isStartingScan, setIsStartingScan] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
   const settingsRef = useRef(null);
   const notifRef = useRef(null);
@@ -73,6 +75,7 @@ export default function Layout() {
     setShowNotifications(false);
     setShowSearch(false);
     setSearchQuery('');
+    setIsMobileMenuOpen(false); // Close mobile menu on navigate
   }, [location.pathname]);
 
   // Fetch reports for search & notifications
@@ -214,18 +217,31 @@ export default function Layout() {
   ];
 
   return (
-    <div className="flex h-screen bg-slate-50 text-slate-900 font-sans">
+    <div className="flex h-screen bg-slate-50 text-slate-900 font-sans overflow-hidden">
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-slate-900/50 z-40 lg:hidden transition-opacity"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
-      <aside className="w-64 bg-slate-50 border-r border-slate-200 flex flex-col justify-between">
-        <div>
-          <div className="p-6">
-            <Link to="/dashboard" className="flex items-center gap-2 group cursor-pointer">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-light to-[#2563eb] flex items-center justify-center font-bold text-white shadow-[0_0_15px_rgba(14,165,233,0.3)]">
+      <aside className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-slate-50 border-r border-slate-200 flex flex-col justify-between transform transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
+          <div className="p-4 lg:p-6 flex justify-between items-center">
+            <Link to="/dashboard" className="flex items-center gap-2 group cursor-pointer" onClick={() => setIsMobileMenuOpen(false)}>
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-light to-[#2563eb] flex items-center justify-center font-bold text-white shadow-[0_0_15px_rgba(14,165,233,0.3)] shrink-0">
                 <Scan size={16} />
               </div>
               <span className="text-xl font-bold font-['Space_Grotesk'] tracking-wide text-slate-900">MedScan</span>
               <span className="text-xs bg-primary-light/10 text-primary-light px-2 py-0.5 rounded font-bold">AI</span>
             </Link>
+            <button 
+              className="lg:hidden p-2 text-slate-500 hover:bg-slate-100 rounded-lg cursor-pointer"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <X size={20} />
+            </button>
           </div>
           
           <nav className="mt-2">
@@ -281,23 +297,34 @@ export default function Layout() {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col overflow-hidden">
+      <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
         {/* Topbar */}
-        <header className="h-16 bg-slate-50 border-b border-slate-200 flex items-center justify-between px-8 shrink-0">
-          <div className="flex-1 flex items-center">
-            {/* Breadcrumb */}
+        <header className="h-16 bg-slate-50 border-b border-slate-200 flex items-center justify-between px-4 sm:px-6 lg:px-8 shrink-0">
+          <div className="flex-1 flex items-center gap-4">
+            {/* Hamburger Menu Button */}
+            <button 
+              className="lg:hidden p-2 -ml-2 text-slate-500 hover:bg-slate-100 rounded-lg cursor-pointer transition-colors"
+              onClick={() => setIsMobileMenuOpen(true)}
+              aria-label="Open menu"
+            >
+              <Menu size={24} />
+            </button>
+            {/* Breadcrumb / Title space */}
+            <div className="hidden sm:block text-lg font-bold text-slate-800 font-['Space_Grotesk']">
+              {navItems.find(i => location.pathname.includes(i.path))?.name || ''}
+            </div>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             {/* ===== SEARCH BAR ===== */}
             <div className="relative" ref={searchRef}>
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={16} />
               <input 
                 type="text" 
-                placeholder="Search patient records..." 
+                placeholder="Search records..." 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={() => { if (searchQuery.length >= 2) setShowSearch(true); }}
-                className="pl-9 pr-4 py-1.5 bg-slate-100 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:bg-white transition-all w-64"
+                className="pl-9 pr-4 py-1.5 bg-slate-100 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:bg-white transition-all w-[140px] sm:w-[200px] lg:w-[260px]"
               />
               {searchQuery && (
                 <button 
@@ -310,7 +337,7 @@ export default function Layout() {
 
               {/* Search Results Dropdown */}
               {showSearch && searchQuery.length >= 2 && (
-                <div className="absolute top-full right-0 mt-2 w-[400px] bg-white rounded-xl shadow-2xl border border-slate-200 overflow-hidden z-50 animate-in fade-in-0 slide-in-from-top-2">
+                <div className="absolute top-full right-0 mt-2 w-[calc(100vw-32px)] max-w-[400px] bg-white rounded-xl shadow-2xl border border-slate-200 overflow-hidden z-50 animate-in fade-in-0 slide-in-from-top-2 origin-top-right">
                   <div className="p-3 border-b border-slate-100 flex justify-between items-center">
                     <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Search Results</p>
                     <span className="text-xs text-slate-400">{searchResults.length} found</span>
@@ -377,7 +404,7 @@ export default function Layout() {
               </button>
 
               {showNotifications && (
-                <div className="absolute top-full right-0 mt-2 w-[380px] bg-white rounded-xl shadow-2xl border border-slate-200 overflow-hidden z-50">
+                <div className="absolute top-full right-0 mt-2 w-[calc(100vw-32px)] sm:w-[380px] max-w-[380px] bg-white rounded-xl shadow-2xl border border-slate-200 overflow-hidden z-50 origin-top-right">
                   <div className="p-4 border-b border-slate-100 flex justify-between items-center">
                     <h3 className="text-sm font-bold text-slate-900">Notifications</h3>
                     <div className="flex items-center gap-3">
@@ -454,7 +481,7 @@ export default function Layout() {
               </button>
 
               {showSettings && (
-                <div className="absolute top-full right-0 mt-2 w-[320px] bg-white rounded-xl shadow-2xl border border-slate-200 overflow-hidden z-50">
+                <div className="absolute top-full right-0 mt-2 w-[calc(100vw-32px)] sm:w-[320px] max-w-[320px] bg-white rounded-xl shadow-2xl border border-slate-200 overflow-hidden z-50 origin-top-right">
                   {/* User header */}
                   <div className="p-5 bg-gradient-to-r from-[#0f172a] to-[#1e293b] text-white">
                     <div className="flex items-center gap-3">
@@ -522,7 +549,7 @@ export default function Layout() {
         </header>
 
         {/* Page Content */}
-        <div className="flex-1 overflow-auto bg-slate-50 p-8">
+        <div className="flex-1 overflow-x-hidden overflow-y-auto bg-slate-50 p-4 sm:p-6 lg:p-8">
           <Outlet />
         </div>
       </main>

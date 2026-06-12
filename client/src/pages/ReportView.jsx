@@ -475,7 +475,7 @@ export default function ReportView() {
             {t.for}: <span className="text-slate-900 font-semibold">{report.familyMemberName === 'Self' ? (user?.name || 'Self') : (report.familyMemberName || 'Self')}</span>
           </p>
         </div>
-        <div className="flex gap-3">
+        <div className="flex flex-wrap gap-2 sm:gap-3">
           <button 
             onClick={() => navigate('/reports')}
             className="flex items-center gap-2 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 px-4 py-2 rounded-lg text-sm font-medium transition-all cursor-pointer"
